@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundTouchNet", "SoundTouchNet\SoundTouchNet.vcxproj", "{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Debug|Win32.Build.0 = Debug|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Debug|x86.ActiveCfg = Debug|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Release|Win32.ActiveCfg = Release|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Release|Win32.Build.0 = Release|Win32
+		{AECD0BD0-2DA6-465B-ACB5-55F7D4DC619A}.Release|x86.ActiveCfg = Release|Win32
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Debug|Win32.ActiveCfg = Debug|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Debug|x86.ActiveCfg = Debug|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Debug|x86.Build.0 = Debug|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Release|Win32.ActiveCfg = Release|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Release|x86.ActiveCfg = Release|x86
+		{0FF32C01-74B9-4822-B030-731DBD19ECEF}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
