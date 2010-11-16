@@ -12,7 +12,7 @@ namespace SoundTouchNet
 
 #define SAMPLETYPE_NET float
 
-	public ref class SoundStretcher : Stream
+	public ref class SoundStretcher : Stream 
 	{
 	public:
 
@@ -139,10 +139,10 @@ namespace SoundTouchNet
 		}
 	  }
 	  
-	  virtual int Read(array<SAMPLETYPE_NET> ^ buffer, int offset, int  count) override
+	  virtual int Read(array<unsigned char> ^ buffer, int offset, int  count) override
 	  {
-		pin_ptr<SAMPLETYPE_NET> p1 = &buffer[offset];
-		SAMPLETYPE_NET* p2 = p1;		
+		pin_ptr<unsigned char> p1 = &buffer[offset];
+		unsigned char* p2 = p1;		
 		return st->receiveSamples( (SAMPLETYPE_NET*)(p2),count / sizeof(SAMPLETYPE_NET));
 	  }
 
@@ -156,10 +156,10 @@ namespace SoundTouchNet
 		throw gcnew  NotImplementedException();
 	  }
 
-	  virtual void Write(array<SAMPLETYPE_NET> ^ buffer, int  offset, int   count) override
+	  virtual void Write(array<unsigned char> ^ buffer, int  offset, int   count) override
 	  {
-		pin_ptr<SAMPLETYPE_NET> p1 = &buffer[offset];
-		SAMPLETYPE_NET* p2 = p1;		
+		pin_ptr<unsigned char> p1 = &buffer[offset];
+		unsigned char* p2 = p1;		
 		st->putSamples( (SAMPLETYPE_NET*)(p2),count / sizeof(SAMPLETYPE_NET));
 	  }
 	  
