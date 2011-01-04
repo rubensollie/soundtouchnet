@@ -54,16 +54,18 @@
             finished = true;
             stretcher.Flush();
           }
-
-          if (bitPerSample == 16)
+          else
           {
-            stretcher.PutSamplesFromBuffer(buffer, 0, bytesRead);
-          }
-          else if (bitPerSample == 8)
-          {
-            for (int i = 0; i < BUFFER_SIZE; i++)
-              buffer2[i] = (short)((buffer[i] - 128) * 256);
-            stretcher.PutSamples(buffer2);
+            if (bitPerSample == 16)
+            {
+              stretcher.PutSamplesFromBuffer(buffer, 0, bytesRead);
+            }
+            else if (bitPerSample == 8)
+            {
+              for (int i = 0; i < BUFFER_SIZE; i++)
+                buffer2[i] = (short)((buffer[i] - 128) * 256);
+              stretcher.PutSamples(buffer2);
+            }
           }
         }
         bytesRead = stretcher.ReceiveSamplesToBuffer(buffer, 0, BUFFER_SIZE);
