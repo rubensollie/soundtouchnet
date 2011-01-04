@@ -1,5 +1,3 @@
-#Tutorial how to make SoundTouch and NAudio together
-
 = How to use NAudio with SoundTouch =
 
 
