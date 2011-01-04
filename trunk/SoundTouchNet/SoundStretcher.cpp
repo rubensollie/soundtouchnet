@@ -9,12 +9,11 @@ using namespace System::IO;
 
 namespace SoundTouchNet
 {
-
-#define SAMPLETYPE_NET short
-
-	public ref class SoundStretcher /*: Stream */ 
+	public ref class SoundStretcher  
 	{
 	public:
+
+		int channels;
 
 		soundtouch::SoundTouch* st;
 		
@@ -23,6 +22,8 @@ namespace SoundTouchNet
 			st = new soundtouch::SoundTouch();
 			st->setSampleRate(sampleRate);
 			st->setChannels(channels);
+	
+			this->channels = channels;
 		}
 
 		~SoundStretcher()
@@ -35,20 +36,35 @@ namespace SoundTouchNet
 			st->clear();
 		}
 
-		void PutSamples(array<SAMPLETYPE_NET> ^ samples, int count)
+
+		void PutSamples(array<short> ^ samples)
 		{
-			pin_ptr<SAMPLETYPE_NET> p1 = &samples[0];
-			SAMPLETYPE_NET* p2 = p1;
+			pin_ptr<short> p1 = &samples[0];
+			short* p2 = p1;
 			
-			st->putSamples(p2,count);
+			st->putSamples(p2,samples->Length / channels );
 		}
 
-		int ReceiveSamples(array<SAMPLETYPE_NET> ^ buffer, int count)
+		int ReceiveSamples(array<short> ^ samples)
 		{
-			pin_ptr<SAMPLETYPE_NET> p1 = &buffer[0];
-			SAMPLETYPE_NET* p2 = p1;
+			pin_ptr<short> p1 = &samples[0];
+			short* p2 = p1;
 		
-			return st->receiveSamples(p2,count);
+			return st->receiveSamples(p2,samples->Length / channels) ;
+		}
+
+		void PutSamplesFromBuffer(array<unsigned char> ^ buffer, int  offset, int   count) 
+	    {
+			pin_ptr<unsigned char> p1 = &buffer[offset];
+			unsigned char* p2 = p1;		
+			st->putSamples( (short*)(p2),count / sizeof(short) / channels);
+		}
+
+		int ReceiveSamplesToBuffer(array<unsigned char> ^ buffer, int offset, int  count) 
+  	    {
+			pin_ptr<unsigned char> p1 = &buffer[offset];
+			unsigned char* p2 = p1;		
+			return   sizeof(short) * st->receiveSamples( (short*)(p2),count / sizeof(short) / channels ) * channels;
 		}
 
 
@@ -56,7 +72,6 @@ namespace SoundTouchNet
 		{
 			st->flush();
 		}
-
 
 		property float Pitch
 		{
@@ -90,6 +105,14 @@ namespace SoundTouchNet
 			}
 		}
 
+		property int UnprocessedSamples
+		{
+			int get()
+			{
+				return st->numUnprocessedSamples();
+			}
+		}
+
 		property bool Empty
 		{
 			bool get()
@@ -106,63 +129,18 @@ namespace SoundTouchNet
 			}
 		}
 		
-	  /*
-	  property  bool CanRead 
+      property String^ VersionString
 	  {
-	   virtual bool get() override { return !Empty; }
+		  String^ get()
+		  {
+			  const char* str = st->getVersionString();
+			  String^ managed_str = gcnew String(str);
+			  return managed_str;
+		  }
 	  }
-
-	  property bool CanSeek 
-	  {
-		virtual bool get() override { return false; }
-	  }
-
-	  property bool CanWrite 
-	  {
-		virtual bool get() override { return true; }
-	  }
-
-	  property __int64 Length 
-	  {
-		virtual __int64 get() override { throw gcnew  NotSupportedException(); }
-	  }
-
-	  property __int64 Position 
-	  {
-		virtual __int64 get() override
-		{
-		  throw gcnew  NotSupportedException();
-		}
-		virtual void set(__int64 value) override
-		{
-		  throw gcnew  NotSupportedException();
-		}
-	  }
+	 
+	  	
 	  
-	  virtual int Read(array<unsigned char> ^ buffer, int offset, int  count) override
-	  {
-		pin_ptr<unsigned char> p1 = &buffer[offset];
-		unsigned char* p2 = p1;		
-		return st->receiveSamples( (SAMPLETYPE_NET*)(p2),count / sizeof(SAMPLETYPE_NET));
-	  }
-
-	  virtual __int64 Seek(__int64 offset, SeekOrigin  origin) override
-	  {
-		throw gcnew  NotImplementedException();
-	  }
-
-	  virtual void SetLength(__int64 value) override
-	  {
-		throw gcnew  NotImplementedException();
-	  }
-
-	  virtual void Write(array<unsigned char> ^ buffer, int  offset, int   count) override
-	  {
-		pin_ptr<unsigned char> p1 = &buffer[offset];
-		unsigned char* p2 = p1;		
-		st->putSamples( (SAMPLETYPE_NET*)(p2),count / sizeof(SAMPLETYPE_NET));
-	  }
-	  */
 
 	};
 }
