@@ -13,7 +13,7 @@ stretcher.Tempo = 2;  // Change tempto, 2 times faster
 
 
 ...
-stretcher.PutSamples(shortBuffer, bufferLength); // Sending data 
+stretcher.PutSamples(shortBuffer); // Sending data 
 ...
 
 
@@ -21,47 +21,10 @@ stretcher.Flush(); // Flush buffer
 
 
 ...
-int count =  stretcher.ReceiveSamples(shortBuffer, bufferLength); // Reading data
+int count =  stretcher.ReceiveSamples(shortBuffer); // Reading data
 ...
 
 
 stretcher.Dispose(); // Class is IDisposable
 
-}}}
-
-Class also implements Stream interface
-
-{{{
-
-using (SoundStretcher stretcher = new SoundStretcher(16000, 1))
-{
-  stretcher.Tempo = 2;
-  using (WaveFileReader waveIn = new WaveFileReader("in.wav"))
-  {
-    waveIn.CopyTo(stretcher);
-  }
-  stretcher.Flush();
-  MemoryStream ms = new MemoryStream();
-  stretcher.CopyTo(ms);
-}
-
-}}}
-
-
-You can quickly process audio by using NAudio for example
-{{{
- using NAudio.Wave;
- 
- SoundStretcher stretcher = new SoundStretcher(16000, 1);
- stretcher.Tempo = 2;
- WaveFileReader waveIn = new WaveFileReader("ref.wav");
- WaveFileWriter waveOut = new WaveFileWriter("out.wav", new WaveFormat(16000, 32, 1));
- waveIn.CopyTo(stretcher);
- stretcher.Flush();
- float[] buff = new float[stretcher.AvaiableSamples];
- stretcher.ReceiveSamples(buff , buff.Length);
- waveOut.WriteData(buff, 0, buff.Length);
- waveOut.Close();
- stretcher.Dispose();
- 
 }}}
