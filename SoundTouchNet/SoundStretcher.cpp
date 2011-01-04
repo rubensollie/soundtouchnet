@@ -10,9 +10,9 @@ using namespace System::IO;
 namespace SoundTouchNet
 {
 
-#define SAMPLETYPE_NET float
+#define SAMPLETYPE_NET short
 
-	public ref class SoundStretcher : Stream 
+	public ref class SoundStretcher /*: Stream */ 
 	{
 	public:
 
@@ -52,7 +52,7 @@ namespace SoundTouchNet
 		}
 
 
-		virtual void  Flush()  override
+		virtual void  Flush()  
 		{
 			st->flush();
 		}
@@ -106,7 +106,7 @@ namespace SoundTouchNet
 			}
 		}
 		
-
+	  /*
 	  property  bool CanRead 
 	  {
 	   virtual bool get() override { return !Empty; }
@@ -162,7 +162,7 @@ namespace SoundTouchNet
 		unsigned char* p2 = p1;		
 		st->putSamples( (SAMPLETYPE_NET*)(p2),count / sizeof(SAMPLETYPE_NET));
 	  }
-	  
+	  */
 
 	};
 }
