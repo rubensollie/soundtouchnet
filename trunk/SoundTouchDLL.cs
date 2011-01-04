@@ -6,64 +6,8 @@ using System.Runtime.InteropServices;
 namespace SoundTouchNet
 {
 
-  public class SoundStretcher : IDisposable
-  {
-    private IntPtr handle;
-
-    public SoundStretcher(int sampleRate, int channels)
-    {
-      handle = soundtouch_createInstance();
-      if (handle == IntPtr.Zero)
-        throw new Exception();
-
-      soundtouch_setChannels(handle, (uint)channels);
-      soundtouch_setSampleRate(handle, (uint)sampleRate);
-    }
-
-    public void Dispose()
-    {
-      if (handle != IntPtr.Zero)
-      {
-        soundtouch_destroyInstance(handle);
-        handle = IntPtr.Zero;
-      }
-    }
-
-    public int Samples
-    {
-      get { return (int)soundtouch_numSamples(handle); }
-    }
-
-    public int UnprocessedSamples
-    {
-      get { return (int)soundtouch_numUnprocessedSamples(handle); }
-    }
-
-    public void PutSamples(float[] samples, int count)
-    {
-      soundtouch_putSamples(handle, samples, (uint)count);
-    }
-
-    public void ReceiveSamples(float[] buffer, int count)
-    {
-      soundtouch_receiveSamples(handle, buffer, (uint)count);
-    }
-
-    public void Flush()
-    {
-      soundtouch_flush(handle);
-    }
-
-    public float Tempo
-    {
-      set
-      {
-        soundtouch_setTempo(handle, value);
-      }
-    }
-    
-    #region DLL import
-
+  public static class SoundTouch
+  { 
     const string soundTouchDLL = "soundtouch.dll";
 
     /// Create a new instance of SoundTouch processor.
@@ -142,7 +86,7 @@ namespace SoundTouchNet
     /// calling this function, otherwise throws a runtime_error exception.
     [DllImport(soundTouchDLL, CallingConvention = CallingConvention.StdCall)]
     private static extern void soundtouch_putSamples(IntPtr h,
-       [MarshalAs(UnmanagedType.LPArray)] float[] samples,       ///< Pointer to sample buffer.
+       [MarshalAs(UnmanagedType.LPArray)] short[] samples,       ///< Pointer to sample buffer.
        uint numSamples      ///< Number of samples in buffer. Notice
                             ///< that in case of stereo-sound a single sample
                             ///< contains data for both channels.
@@ -184,7 +128,7 @@ namespace SoundTouchNet
     /// with 'ptrBegin' function.
     [DllImport(soundTouchDLL, CallingConvention = CallingConvention.StdCall)]
     private static extern uint soundtouch_receiveSamples(IntPtr h,
-           [MarshalAs(UnmanagedType.LPArray)] float[] outBuffer,           ///< Buffer where to copy output samples.
+           [MarshalAs(UnmanagedType.LPArray)] short[] outBuffer,           ///< Buffer where to copy output samples.
            uint maxSamples     ///< How many samples to receive at max.
            );
 
@@ -197,7 +141,5 @@ namespace SoundTouchNet
     private static extern uint soundtouch_isEmpty(IntPtr h);
 
   }
-
-    #endregion
 
 }
