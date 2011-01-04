@@ -3,7 +3,7 @@
 
 {{{
     /// <summary>
-    /// Load wave file and change its tempo, pitch, rate and save it to another file
+    /// Load wave file and change its tempo, pitch and rate and save it to another file
     /// </summary>
     static void processWave(string fileIn, string fileOut, float newTempo, float newPitch, float newRate)
     {
@@ -30,18 +30,16 @@
       byte[] buffer = new byte[BUFFER_SIZE];
       short[] buffer2 = null;
 
-      if (bitPerSample == 16)
+      if (bitPerSample != 16 && bitPerSample != 8)
       {
+        throw new Exception("Not implemented yet.");
       }
-      else if (bitPerSample == 8)
+
+      if (bitPerSample == 8)
       {
         buffer2 = new short[BUFFER_SIZE];
       }
-      else
-        throw new Exception("Not implemented yet.");
 
-
-      int offset = 0;
       bool finished = false;
 
       while (true)
@@ -70,7 +68,6 @@
         }
         bytesRead = stretcher.ReceiveSamplesToBuffer(buffer, 0, BUFFER_SIZE);
         writer.WriteData(buffer, 0, bytesRead);
-        offset += BUFFER_SIZE;
 
         if (finished && bytesRead == 0)
           break;
