@@ -5,7 +5,7 @@
     /// <summary>
     /// Load wave file and change its tempo, pitch and rate and save it to another file
     /// </summary>
-    static void processWave(string fileIn, string fileOut, float newTempo, float newPitch, float newRate)
+    static void processWave(string fileIn, string fileOut, float newTempo = 1, float newPitch = 1, float newRate = 1)
     {
       WaveFileReader reader = new WaveFileReader(fileIn);
 
